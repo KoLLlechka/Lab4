@@ -1,0 +1,34 @@
+﻿<Window x:Class="lab4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab4"
+        mc:Ignorable="d"
+                Title="MainWindow" Height="500" Width="1000" WindowStartupLocation="CenterScreen">
+    <Grid RenderTransformOrigin="0,0">
+        <ComboBox x:Name="tasksComboBox" HorizontalAlignment="Left" Margin="11,35,0,0" VerticalAlignment="Top" Width="248" IsReadOnly="True" FontFamily="Lucida Console" Cursor="Hand" SelectionChanged="tasksComboBox_SelectionChanged">
+            <ComboBoxItem Content="Lab 4: Задание 1"/>
+            <ComboBoxItem Content="Lab 4: Задание 2"/>
+            <ComboBoxItem Content="Lab 4: Задание 3"/>
+            <ComboBoxItem Content="Lab 4: Задание 4"/>
+            <ComboBoxItem Content="Lab 4: Задание 5"/>
+            <ComboBoxItem Content="Lab 4: Задание 6"/>
+            <ComboBoxItem Content="Lab 4: Задание 7"/>
+            <ComboBoxItem Content="Lab 4: Задание 8"/>
+        </ComboBox>
+        <Label Content="Выберите задание:" HorizontalAlignment="Left" Height="20" Margin="11,10,0,0" VerticalAlignment="Top" Width="136" FontFamily="Lucida Console"/>
+        <Label x:Name="task" Content="Задание не выбрано" HorizontalAlignment="Left" Height="280" Margin="11,60,0,0" VerticalAlignment="Top" Width="496" FontFamily="Lucida Console"/>
+        <Label x:Name="input" Content="Ввод значений:" HorizontalAlignment="Left" Height="24" Margin="534,10,0,0" VerticalAlignment="Top" Width="115" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <Label x:Name="valueText1" Content="y =" HorizontalAlignment="Left" Height="24" Margin="534,32,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <Label x:Name="valueText2" Content="x =" HorizontalAlignment="Left" Height="24" Margin="534,59,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <Label x:Name="valueText3" Content="arr =" HorizontalAlignment="Left" Height="24" Margin="534,86,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <Label x:Name="valueText4" Content="arr3 =" HorizontalAlignment="Left" Height="24" Margin="729,86,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <TextBox x:Name="value3" HorizontalAlignment="Left" Height="18" Margin="590,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <TextBox x:Name="value1" HorizontalAlignment="Left" Height="18" Margin="590,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <TextBox x:Name="value2" HorizontalAlignment="Left" Height="18" Margin="590,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <TextBox x:Name="value4" HorizontalAlignment="Left" Height="18" Margin="785,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" FontFamily="Lucida Console" Visibility="Collapsed"/>
+        <Button x:Name="outputButton" Content=" Вывести &#xD;&#xA;&#xD;&#xA;результат" HorizontalAlignment="Left" Height="60" Margin="753,20,0,0" VerticalAlignment="Top" Width="148" FontFamily="Lucida Console" FontSize="16" IsCancel="True" RenderTransformOrigin="0.5,0.5" Cursor="Hand" Click="outputButton_Click" Visibility="Collapsed"/>
+        <Label x:Name="answer" Panel.ZIndex="0" Content="Ответ:" HorizontalAlignment="Left" Margin="534,195,0,0" VerticalAlignment="Top" FontFamily="Lucida Console" Visibility="Collapsed" />
+    </Grid>
+</Window>
