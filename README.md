@@ -318,6 +318,7 @@ public static string ReadBinFile(string sour){...}
 ```c#
 public static string SuitableToys(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (BinaryReader reader = new BinaryReader(File.Open(sour, FileMode.Open)))
     {
         while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -358,6 +359,7 @@ public static string FillFileN(string sour, int x) {...}
 ```c#
 public static string MinPlusMax(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         int min = 9999;
@@ -397,6 +399,7 @@ public static string FillFile(string sour, int x) {...}
 ```c#
 public static string EvenEl(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         int sum = 0;
@@ -431,6 +434,7 @@ public static string ReadFile(string sour) {...}
 ```c#
 public static string WriterFile(string sour, string final)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         using (StreamWriter writer = new StreamWriter(File.Open(final, FileMode.Create)))
