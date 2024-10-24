@@ -8,7 +8,9 @@
 заносятся в элементы, которые на шахматной доске были бы белыми.
 Третий массив, размерностью n х n, заполняется для произвольного n так же, как для n=5:
 
-![Снимок экрана 2024-10-20 192734](https://github.com/user-attachments/assets/e1955ff8-5a2b-43d0-aa02-73d0a5db44e2)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e1955ff8-5a2b-43d0-aa02-73d0a5db44e2" />
+</p>
 
 Задание 2. 
 Задан двумерный массив. Найдите сумму элементов первого столбца без одного последнего
@@ -177,40 +179,43 @@ public Matrix Transpose()
 //сложение матриц
 public static Matrix operator +(Matrix m1, Matrix m2)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] += m2.matrix[i, j];
+            m3.matrix[i, j] = m1.matrix[i, j] + m2.matrix[i, j];
         }
     }
-    return m1;
+    return m3;
 }
 
 //вычитание матриц
 public static Matrix operator -(Matrix m1, Matrix m2)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] -= m2.matrix[i, j];
+            m3.matrix[i, j] = m1.matrix[i, j] - m2.matrix[i, j];
         }
     }
-    return m1;
+    return m3;
 }
 
 //умножение матрицы на число
 public static Matrix operator *(int x, Matrix m1)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] *= x;
+            m3.matrix[i, j] = m1.matrix[i, j] * x;
         }
     }
-    return m1;
+    return m3;
 }
 ```
 
@@ -315,6 +320,7 @@ public static string ReadBinFile(string sour){...}
 ```c#
 public static string SuitableToys(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (BinaryReader reader = new BinaryReader(File.Open(sour, FileMode.Open)))
     {
         while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -355,6 +361,7 @@ public static string FillFileN(string sour, int x) {...}
 ```c#
 public static string MinPlusMax(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         int min = 9999;
@@ -394,6 +401,7 @@ public static string FillFile(string sour, int x) {...}
 ```c#
 public static string EvenEl(string sour)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         int sum = 0;
@@ -428,6 +436,7 @@ public static string ReadFile(string sour) {...}
 ```c#
 public static string WriterFile(string sour, string final)
 {
+    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
     using (StreamReader reader = new StreamReader(sour))
     {
         using (StreamWriter writer = new StreamWriter(File.Open(final, FileMode.Create)))
