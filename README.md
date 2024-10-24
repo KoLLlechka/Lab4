@@ -177,40 +177,43 @@ public Matrix Transpose()
 //сложение матриц
 public static Matrix operator +(Matrix m1, Matrix m2)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] += m2.matrix[i, j];
+            m3.matrix[i, j] = m1.matrix[i, j] + m2.matrix[i, j];
         }
     }
-    return m1;
+    return m3;
 }
 
 //вычитание матриц
 public static Matrix operator -(Matrix m1, Matrix m2)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] -= m2.matrix[i, j];
+            m3.matrix[i, j] = m1.matrix[i, j] - m2.matrix[i, j];
         }
     }
-    return m1;
+    return m3;
 }
 
 //умножение матрицы на число
 public static Matrix operator *(int x, Matrix m1)
 {
+    Matrix m3 = new Matrix(m1);
     for (int i = 0; i < m1.matrix.GetLength(0); i++)
     {
         for (int j = 0; j < m1.matrix.GetLength(1); j++)
         {
-            m1.matrix[i, j] *= x;
+            m3.matrix[i, j] = m1.matrix[i, j] * x;
         }
     }
-    return m1;
+    return m3;
 }
 ```
 
