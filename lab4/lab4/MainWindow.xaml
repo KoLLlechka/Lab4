@@ -16,9 +16,15 @@
             <ComboBoxItem Content="Lab 4: Задание 6"/>
             <ComboBoxItem Content="Lab 4: Задание 7"/>
             <ComboBoxItem Content="Lab 4: Задание 8"/>
+            <ComboBoxItem Content="Lab 5: Задание 1"/>
+            <ComboBoxItem Content="Lab 5: Задание 2"/>
+            <ComboBoxItem Content="Lab 5: Задание 3"/>
+            <ComboBoxItem Content="Lab 5: Задание 4"/>
+            <ComboBoxItem Content="Lab 5: Задание 5"/>
+            <ComboBoxItem Content="Lab 5: Задание 6"/>
         </ComboBox>
         <Label Content="Выберите задание:" HorizontalAlignment="Left" Height="20" Margin="11,10,0,0" VerticalAlignment="Top" Width="136" FontFamily="Lucida Console"/>
-        <Label x:Name="task" Content="Задание не выбрано" HorizontalAlignment="Left" Height="280" Margin="11,60,0,0" VerticalAlignment="Top" Width="496" FontFamily="Lucida Console"/>
+        <Label x:Name="task" Content="Задание не выбрано" HorizontalAlignment="Left" Height="364" Margin="11,0,0,0" VerticalAlignment="Center" Width="500" FontFamily="Lucida Console"/>
         <Label x:Name="input" Content="Ввод значений:" HorizontalAlignment="Left" Height="24" Margin="534,10,0,0" VerticalAlignment="Top" Width="115" FontFamily="Lucida Console" Visibility="Collapsed"/>
         <Label x:Name="valueText1" Content="y =" HorizontalAlignment="Left" Height="24" Margin="534,32,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>
         <Label x:Name="valueText2" Content="x =" HorizontalAlignment="Left" Height="24" Margin="534,59,0,0" VerticalAlignment="Top" Width="55" FontFamily="Lucida Console" Visibility="Collapsed"/>

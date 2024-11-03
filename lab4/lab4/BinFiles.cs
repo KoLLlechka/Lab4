@@ -100,12 +100,13 @@ namespace lab4
         public static string ReadBinFile(string sour)
         {
             string s = "Данные исходного файла:\n\n";
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (BinaryReader reader = new BinaryReader(File.Open(sour, FileMode.Open)))
             {
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
-                    s += reader.ReadString() + " " + reader.ReadDouble() + " " + 
-                        reader.ReadInt32() + " " + reader.ReadInt32() + "\n\n";
+                    s += reader.ReadString() + " " + reader.ReadDouble() + " " +
+                    reader.ReadInt32() + " " + reader.ReadInt32() + "\n\n";
                 }
             }
             return s + SuitableToys(sour);
@@ -114,6 +115,7 @@ namespace lab4
         //вывод подходит ли игрушка
         public static string SuitableToys(string sour)
         {
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (BinaryReader reader = new BinaryReader(File.Open(sour, FileMode.Open)))
             {
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -153,6 +155,7 @@ namespace lab4
         //сумма минимаьного и максимального элементов
         public static string MinPlusMax(string sour)
         {
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (StreamReader reader = new StreamReader(sour))
             {
                 int min = 9999;
@@ -191,6 +194,7 @@ namespace lab4
         //сумма четных элементов
         public static string EvenEl(string sour)
         {
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (StreamReader reader = new StreamReader(sour))
             {
                 int sum = 0;
@@ -206,6 +210,7 @@ namespace lab4
         //вывод данных файла
         public static string ReadFile(string sour)
         {
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (StreamReader reader = new StreamReader(sour))
             {
                 string s = "Файл содержит данные:\n\n";
@@ -220,6 +225,7 @@ namespace lab4
         //создание нового файла, где каждая строка содержит первый символ соответствующей строки
         public static string WriterFile(string sour, string final)
         {
+            if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
             using (StreamReader reader = new StreamReader(sour))
             {
                 using (StreamWriter writer = new StreamWriter(File.Open(final, FileMode.Create)))
