@@ -8,6 +8,41 @@ namespace lab4
 {
     internal class InputCheck
     {
+        //проверка на содержание заданного числа в листе
+        public static bool IsValueInList(string[] sarr, string s)
+        {
+            return sarr.Contains(s);
+        }
+
+        //проверка на не пустоту словаря
+        public static bool IsDictionaryNotNone(Dictionary<string, HashSet<string>> d)
+        {
+            return d.Count != 1;
+        }
+
+        //проверка входят ли дискотеки в перечень
+        public static bool IsValueInAllDisko(string[] sarr, Dictionary<string, HashSet<string>> d)
+        {
+            foreach (var dis in sarr)
+            {
+                if (!d["All Disko:"].Contains(dis))
+                    return false;
+            }
+            return true;
+        }
+
+        //проверка на не пустоту строки
+        public static bool IsStrNotNone(string s)
+        {
+            return s != "";
+        }
+
+        //проверка на не пустоту листа
+        public static bool IsListNotNone(string[] sarr)
+        {
+            return sarr[0] != "";
+        }
+
         //проверка перевода из str в int
         public static bool IsStringToInt(string x)
         {

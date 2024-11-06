@@ -36,5 +36,6 @@
         <TextBox x:Name="value4" HorizontalAlignment="Left" Height="18" Margin="785,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" FontFamily="Lucida Console" Visibility="Collapsed"/>
         <Button x:Name="outputButton" Content=" Вывести &#xD;&#xA;&#xD;&#xA;результат" HorizontalAlignment="Left" Height="60" Margin="753,20,0,0" VerticalAlignment="Top" Width="148" FontFamily="Lucida Console" FontSize="16" IsCancel="True" RenderTransformOrigin="0.5,0.5" Cursor="Hand" Click="outputButton_Click" Visibility="Collapsed"/>
         <Label x:Name="answer" Panel.ZIndex="0" Content="Ответ:" HorizontalAlignment="Left" Margin="534,195,0,0" VerticalAlignment="Top" FontFamily="Lucida Console" Visibility="Collapsed" />
+        <Button x:Name="add" Content="Добавить студента" HorizontalAlignment="Left" Height="25" Margin="534,94,0,0" VerticalAlignment="Top" Width="155" FontFamily="Lucida Console" Visibility="Collapsed" Click="addButton_Click"/>
     </Grid>
 </Window>

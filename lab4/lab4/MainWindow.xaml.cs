@@ -22,7 +22,8 @@ namespace lab4
     public partial class MainWindow : Window
     {
         string textTask;
-
+        Dictionary<string, HashSet<string>> studentDisko = new Dictionary<string, HashSet<string>>();
+        int kolOfStudent = 1;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace lab4
             textTask = tasksComboBox.SelectedItem.ToString().Substring(38);
             answer.Content = "";
             answer.Visibility = Visibility.Visible;
+            add.Visibility = Visibility.Collapsed;
             switch (textTask)
             {           
                 case "Lab 4: Задание 1":
@@ -121,37 +123,40 @@ namespace lab4
                     ChangedTask();
                     break;
                 case "Lab 5: Задание 1":
-                    answer.Content = "";
+                    answer.Content = "Полученный лист:\r\n\r\n";
                     task.Content = "Решить задачу, используя класс List\r\n" +
                         "Составить программу, которая переворачивает список L, т.е. изменяет\r\n" +
-                        "ссылки в этом списке так, чтобы его элементы оказались\r\nрасположенными в " +
-                        "обратном порядке.";
-                    ValueText("", "", "", "");
-                    VisibleValue(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+                        "ссылки в этом списке так, чтобы его элементы оказались\r\n" +
+                        "расположенными в обратном порядке.";
+                    ValueText("L =", "", "", "");
+                    VisibleValue(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
                     value3.Height = 18;
                     ChangedTask();
                     break;
                 case "Lab 5: Задание 2":
-                    answer.Content = "";
+                    answer.Content = "Полученный лист:\r\n\r\n";
                     task.Content = "Решить задачу, используя класс LinkedList\r\n" +
                         "В списке L справа и слева от элемента E вставляет элемент F";
-                    ValueText("", "", "", "");
-                    VisibleValue(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+                    ValueText("L =", "E =", "F =", "");
+                    VisibleValue(Visibility.Visible, Visibility.Visible, Visibility.Visible, Visibility.Collapsed);
                     value3.Height = 18;
                     ChangedTask();
                     break;
                 case "Lab 5: Задание 3":
-                    answer.Content = "";
+                    answer.Content = "All Disko: 1, 2, 3, 4, 5, 6\n";
                     task.Content = "Решить задачу, используя класс HashSet\r\n" +
-                        "Есть перечень дискотек города. Студенты группы любят посещать\r\nдискотеки. " +
-                        "Известно для каждого студента, в каких дискотеках он\r\nпобывал. " +
-                        "Определить:\r\nв какие дискотеки из перечня ходили все студенты группы;" +
-                        "\r\nв какие дискотеки из перечня ходили некоторые студенты группы;\r\n" +
+                        "Есть перечень дискотек города. Студенты группы любят посещать\r\n" +
+                        "дискотеки. Известно для каждого студента, в каких дискотеках он\r\n" +
+                        "побывал. Определить:\r\n" +
+                        "в какие дискотеки из перечня ходили все студенты группы;\r\n" +
+                        "в какие дискотеки из перечня ходили некоторые студенты группы;\r\n" +
                         "в какие дискотеки из перечня не ходил ни один из студентов группы?";
-                    ValueText("", "", "", "");
-                    VisibleValue(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+                    ValueText("S =", "", "", "");
+                    VisibleValue(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
                     value3.Height = 18;
+                    add.Visibility = Visibility.Visible;
                     ChangedTask();
+                    ForLab5Ex3();
                     break;
                 case "Lab 5: Задание 4":
                     answer.Content = "";
@@ -207,8 +212,8 @@ namespace lab4
                         "предназначаться для детей от двух до пяти лет). Получить сведения о\r\n" +
                         "том, можно ли подобрать игрушку, любую, кроме мяча, подходящую\r\n" +
                         "ребенку трех лет";
-                    ValueText("", "", "", "");
-                    VisibleValue(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+                    ValueText("t =", "", "", "");
+                    VisibleValue(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
                     value3.Height = 18;
                     ChangedTask();
                     break;
@@ -216,6 +221,8 @@ namespace lab4
                     break;
             }
         }
+
+        
 
         private void ValueText(string v1, string v2, string v3, string v4)
         {
@@ -308,7 +315,59 @@ namespace lab4
                 case "Lab 4: Задание 8":
                     answer.Content = ForBinary5();
                     break;
+                case "Lab 5: Задание 1":
+                    answer.Content += InputIsCorrect(
+                        () => InputCheck.IsListNotNone(value1.Text.Split(' ')),
+                        () => Tasks.ForEx1(value1.Text.Split(' ')));
+                    break;
+                case "Lab 5: Задание 2":
+                    answer.Content = "Полученный лист:\r\n\r\n" + InputIsCorrect(
+                        () => InputCheck.IsListNotNone(value1.Text.Split(' ')) && 
+                        InputCheck.IsValueInList(value1.Text.Split(' '), value2.Text) &&
+                        InputCheck.IsStrNotNone(value2.Text) &&
+                        InputCheck.IsStrNotNone(value3.Text),
+                        () => Tasks.ForEx2(value1.Text.Split(' '), value2.Text, value3.Text));
+                    break;
+                case "Lab 5: Задание 3":
+                    answer.Content = "All Disko: 1, 2, 3, 4, 5, 6\n" + InputIsCorrect(
+                        () => InputCheck.IsDictionaryNotNone(studentDisko),
+                        () => Tasks.ForEx3(studentDisko));
+                    ForLab5Ex3();
+                    break;
+                case "Lab 5: Задание 4":
+                    answer.Content = Tasks.ForEx4("Lab5ex4.txt");
+                    break;
+                case "Lab 5: Задание 5":
+                    answer.Content = Tasks.ForEx5("Lab5ex5.txt");
+                    break;
+                case "Lab 5: Задание 6":
+                    answer.Content = Tasks.ForEx6(value1.Text.Split(' '));
+                    break;
             }
+        }
+
+        
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InputCheck.IsValueInAllDisko(value1.Text.Split(' '), studentDisko))
+            {
+                studentDisko.Add("Student" + $"{kolOfStudent}" + ":",
+                    new HashSet<string>(value1.Text.Split(' ')));
+                answer.Content += "Student" + $"{kolOfStudent}" + ": " + string.Join(", ",
+                    value1.Text.Split(' ')) + "\n";
+                kolOfStudent++; 
+            }
+            else
+            {
+                answer.Content += "Не все названия дискотек соответствуют названиям из перечня\n";
+            }
+        }
+
+        private void ForLab5Ex3()
+        {
+            studentDisko.Clear();
+            kolOfStudent = 1;
+            studentDisko.Add("All Disko:", new HashSet<string> {"1", "2", "3", "4", "5", "6"});
         }
 
         private string ForBinary5()
