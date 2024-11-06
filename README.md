@@ -1,300 +1,228 @@
 # ООП. Лабораторная работа №4. Массивы и файлы. Вариант 9
-## Постановка задач 1 - 3
-Задание 1. 
-Первый массив, размерностью n х m , заполняется данными, вводимыми с клавиатуры, так что
-заполнение ведется по строкам от первых элементов строки к последним.
-Второй массив, размерностью n х n, заполняется случайными числами так, что четные числа
-заносятся в элементы массива, которые на шахматной доске были бы черными, а нечетные числа
-заносятся в элементы, которые на шахматной доске были бы белыми.
-Третий массив, размерностью n х n, заполняется для произвольного n так же, как для n=5:
+## Постановка задачи 1
+Решить задачу, используя класс List 
+Составить программу, которая переворачивает список L, т.е. изменяет ссылки в этом списке так,
+чтобы его элементы оказались расположенными в обратном порядке.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/e1955ff8-5a2b-43d0-aa02-73d0a5db44e2" />
-</p>
-
-Задание 2. 
-Задан двумерный массив. Найдите сумму элементов первого столбца без одного последнего
-элемента, сумму элементов второго столбца без двух последних, сумму третьего столбца без трех
-последних и т.д. Последний столбец не обрабатывается. Среди найденных сумм найдите
-максимальную.
-
-Задание 3. 
-(А+4*В)-Ст
-
-## Класс Matrix
-## Поле
-Класс содержит поле:
 ```c#
-private int[,] matrix;
+public static List<T> RevList<T>(List<T> list) {...}
+```
+## Тесты
+
+![image](https://github.com/user-attachments/assets/e6d9222a-fa9b-4d86-93a4-8c9b5cff20eb)
+
+## Постановка задачи 2
+Решить задачу, используя класс LinkedList
+D списке L справа и слева от элемента E вставляет элемент F.
+
+```c#
+public static LinkedList<T> FToLinkedList<T>(LinkedList<T> list, T E, T F) {...}
 ```
 
-## Конструкторы
-Конструктор **по умолчанию** инициализирует пустую матрицу:
+## Тесты
+
+![image](https://github.com/user-attachments/assets/a9334302-c6d9-473d-a911-6b7ca6eda6a8)
+
+## Постановка задачи 3
+Решить задачу, используя класс HashSet
+Есть перечень дискотек города. Студенты группы любят посещать дискотеки. Известно для
+каждого студента, в каких дискотеках он побывал. Определить:
+в какие дискотеки из перечня ходили все студенты группы;
+в какие дискотеки из перечня ходили некоторые студенты группы;
+в какие дискотеки из перечня не ходил ни один из студентов группы?
+
+Определяет дискотеки, в которые ходили все студенты группы:
 
 ```c#
-public Matrix()
+public static HashSet<string> AllStudents(Dictionary<string, HashSet<string>> students)
 {
-    matrix = new int[0,0];
-}
-```
-
-Конструктор, создающий матрицу, исходя из введенных значений:
-
-```c#
-public Matrix(string[] stringArr, int n, int m)
-{
-    matrix = new int[n, m];
-    for (int i = 0, k = 0; i < n; i++)
+    HashSet<string> result = new HashSet<string>();
+    foreach (var dis in students["Student1:"])
     {
-        for (int j = 0; j < m; j++, k++)
-        {
-            matrix[i, j] = int.Parse(stringArr[k]);
-        }
+        result.Add(dis);
     }
+    for (int i = 2; i + 1 <= students.Count; i++)
+    {
+        result.IntersectWith(students["Student" + i + ":"]);
+    }
+    return result;
 }
 ```
 
-Конструктор, создающий матрицу с рандомными значениями, но введенной размерностью:
+Определяет дискотеки, в которые ходили некоторые студенты группы:
 
 ```c#
-public Matrix(int n, int m)
+public static HashSet<string> SomeStudents(Dictionary<string, HashSet<string>> students)
 {
-    matrix = new int[n, m];
-    Random random = new Random();
-    for (int i = 0; i < n; i++)
+    HashSet<string> result = new HashSet<string>();
+    foreach (var dis in students["Student1:"])
     {
-        for (int j = 0; j < m; j++)
-        {
-            matrix[i, j] = random.Next(-9, 20);
-        }
+        result.Add(dis);
     }
-    Thread.Sleep(1);
+    for (int i = 2; i + 1 <= students.Count; i++)
+    {
+        result.UnionWith(students["Student" + i + ":"]);
+    }
+    return result;
 }
 ```
 
-Конструктор, создающий матрицу, располагая элементы так, что четные значения расположены на нечетных позициях матрицы, а нечетные - на четных позициях:
+Определяет дискотеки, в которые не ходил ни один из студентов группы:
 
 ```c#
-public Matrix(int n)
+public static HashSet<string> NobodyStudents(Dictionary<string, HashSet<string>> students)
 {
-    matrix = new int[n, n];
-    Random random = new Random();
-    for (int i = 0; i < n; i++)
+    HashSet<string> result = new HashSet<string>();
+    foreach (var dis in students["All Disko:"])
     {
-        for (int j = 0; j < n; j++)
-        {
-            int num = random.Next(10, 100);
-            if ((i + j) % 2 == 0)
-            {
-                if (num % 2 == 0)
-                    matrix[i, j] = num + 1;
-                else
-                    matrix[i, j] = num;
-            }
-            else
-            {
-                if (num % 2 == 0)
-                    matrix[i, j] = num;
-                else
-                    matrix[i, j] = num + 1;
-            }
-        }
+        result.Add(dis);
     }
-}
-```
-
-Конструктор, создающий матрицу, располая элементы по диагонали, начиная с левого нижнего угла и заканчивая на главной диагонали матрицы:
-
-```c#
-public Matrix(string[] stringArr, int n)
-{
-    matrix = new int[n, n];
-    for (int i = n - 1, k = 0, j2 = 0; i >= 0; i--, j2++)
+    for (int i = 1; i + 1 <= students.Count; i++)
     {
-        for (int j = 0, i2 = i; j <= j2; k++, i2++, j++)
-        {
-            matrix[i2,j] = int.Parse(stringArr[k]);
-        }
+        result.ExceptWith(students["Student" + i + ":"]);
     }
-}
-```
-
-**Конструктор копирования**:
-
-```c#
-public Matrix(Matrix M) 
-{
-    matrix = M.matrix;
-}
-```
-
-## Методы
-
-Ниже представлены реализованные **методы** класса **Matrix**:
-
-Перегрузка метода ToString() для вывода матрицы:
-```c#
-//перегрузка метода ToString() для вывода матрицы
-public override string ToString() {...}
-
-//находит максимальную сумму из сумм элементов столбцов 
-//матрицы без учета элементов, номер которых соответствует
-//данному столбцу и тех, что ниже них
-public int Sum()
-{
-    int n = matrix.GetLength(0);
-    int m = matrix.GetLength(1);
-    int maxSum = 0;
-    for (int i = 0; i < n - 1; i++)
-    {
-        int sum = 0;
-        for (int j = 0; j < m - i - 1; j++)
-        {
-            sum += matrix[j, i];
-            if (sum > maxSum)
-                maxSum = sum;
-        }
-    }
-    return maxSum;
-}
-
-//транспонирует матрицу
-public Matrix Transpose()
-{
-    Matrix m = new Matrix(matrix.GetLength(1), matrix.GetLength(0));
-    for (int i = 0; i < matrix.GetLength(1); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(0); j++)
-        {
-            m.matrix[i, j] = matrix[j, i];
-        }
-    }
-    return m;
-}
-```
-
-Перегрузки операторов:
-
-```c#
-//сложение матриц
-public static Matrix operator +(Matrix m1, Matrix m2)
-{
-    Matrix m3 = new Matrix(m1);
-    for (int i = 0; i < m1.matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < m1.matrix.GetLength(1); j++)
-        {
-            m3.matrix[i, j] = m1.matrix[i, j] + m2.matrix[i, j];
-        }
-    }
-    return m3;
-}
-
-//вычитание матриц
-public static Matrix operator -(Matrix m1, Matrix m2)
-{
-    Matrix m3 = new Matrix(m1);
-    for (int i = 0; i < m1.matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < m1.matrix.GetLength(1); j++)
-        {
-            m3.matrix[i, j] = m1.matrix[i, j] - m2.matrix[i, j];
-        }
-    }
-    return m3;
-}
-
-//умножение матрицы на число
-public static Matrix operator *(int x, Matrix m1)
-{
-    Matrix m3 = new Matrix(m1);
-    for (int i = 0; i < m1.matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < m1.matrix.GetLength(1); j++)
-        {
-            m3.matrix[i, j] = m1.matrix[i, j] * x;
-        }
-    }
-    return m3;
-}
-```
-
-Геттер:
-
-```c#
-public int[,] GetMatrix
-{
-    get { return matrix; }
+    return result;
 }
 ```
 
 ## Тесты
 
-# Если пользователь корректно ввел размерность матрицы, ее элементы и подходящее количество элементов для 1 задания
-*Вывод:*
-
-![image](https://github.com/user-attachments/assets/531d8a0e-05c7-4b4c-91ba-dd0da487e66d)
-
-# Если пользователь корректно ввел размерность матрицы для 2 задания
-*Вывод:*
-
-*Ожидаемый резыльтат: 193*
-
-*Полученный резыльтат:*
-
-![image](https://github.com/user-attachments/assets/706c6c95-d8d5-41ae-998f-03f89499d8dd)
-
-# Если пользователь корректно ввел размерности для трех матриц для 3 задания
-*Ожидаемый результат:*
-
-![image](https://github.com/user-attachments/assets/e4032daf-48ff-449b-b8e6-2ad5d7106768)
-
-*Подученный результат:*
-
-![image](https://github.com/user-attachments/assets/0d2e4c3b-3348-4393-ba42-79b877e1222c)
+![image](https://github.com/user-attachments/assets/02df3669-f16d-4c6f-8937-ab6eaee15316)
 
 ## Постановка задачи 4
+Решить задачу, используя класс HashSet
+Дан текстовый файл. Обработать содержимое файла с использованием HashSet
+Файл содержит текст на русском языке. Напечатать в алфавитном порядке символы, которые
+встречаются хотя бы однажды в словах с чётными номерами (нумерацию вести с 1).
 
-Бинарные файлы, содержат числовые данные, исходный файл необходимо заполнить случайными данными, заполнение организовать отдельным методом. 
-Получить в другом файле последовательного доступа все компоненты исходного файла, кроме тех, которые кратны k.
-
-Заполнение бинарного файла случайными данными:
+Символы, встречающиеся хотя бы однажды в словах с чётными номерами:
 
 ```c#
-public static void BinWriter1(string file)
+public static char[] Symbols(string f)
 {
-    using (BinaryWriter bin = new BinaryWriter(File.Open(file, FileMode.Create)))
+    using (StreamReader reader = new StreamReader(f))
     {
-        Random random = new Random();
-        for (int i = 0; i < 10; i++)
+        string s = string.Empty;
+        while (!reader.EndOfStream)
         {
-            bin.Write(random.Next(-100, 101));
+            s += reader.ReadLine();
         }
+        string s1 = string.Empty;
+        foreach (var c in s)
+        {
+            if (!char.IsPunctuation(c))
+                s1 += c;
+        }
+        HashSet<string> result = new HashSet<string>(s1.Split(' '));
+        HashSet<char> result2 = new HashSet<char>();
+        int i = 1;
+        foreach (var str in result)
+        {
+            if (i%2 == 0)
+                foreach (var c in str)
+                {
+                    result2.Add(c);
+                }
+            i++;  
+        }
+        char[] result3 = result2.ToArray();
+        Array.Sort(result3);
+        return result3;
     }
 }
 ```
 
-Заполнение бинарного файла значениями из исходного не кратных k:
-
-```c#
-public static string WithoutMultiplesK(string sour, string final, int k) {...}
-```
 ## Тесты
+
+*Содержание файла:*
+
+![image](https://github.com/user-attachments/assets/a161c34a-af5a-4781-90e3-78c71919029a)
+
 *Вывод:*
 
-![image](https://github.com/user-attachments/assets/a0f1e655-dcce-4578-b7c4-396a5b46dc51)
+![image](https://github.com/user-attachments/assets/6afdfd70-90e4-4116-8449-22bde566a88d)
 
 ## Постановка задачи 5
+Решить задачу, используя класс Dictionary (или класс SortedList)
 
-Бинарные файлы содержат величины типа struct, заполнение исходного файла необходимо организовать отдельным методом. 
+Решить текстовую задачу с использованием словаря (входные данные читать из текстового файла)
+В некотором вузе абитуриенты проходили предварительное тестирование, по результатам
+которого они могут быть допущены к сдаче вступительных экзаменов в первом потоке.
+Тестирование проводится по трём предметам, по каждому предмету абитуриент может набрать
+от 0 100 баллов. При этом к сдаче экзаменов в первом потоке допускаются абитуриенты,
+набравшие по результатам тестирования не менее 30 баллов по каждому из трёх предметов,
+причём сумма баллов должна быть не менее 140. На вход программы подаются сведения о
+результатах предварительного тестирования. Известно, что общее количество участников
+тестирования не превосходит 500.
+
+В первой строке вводится количество абитуриентов, принимавших участие в тестировании, N.
+Далее следуют N строк, имеющих следующий формат:
+
+<Фамилия> <Имя> <Баллы>
+
+Здесь <Фамилия> – строка, состоящая не более чем из 20 символов; <Имя> – строка, состоящая не
+более чем из 15 символов, <Баллы> – строка, содержащая два целых числа, разделенных
+пробелом – баллы, полученные на тестировании по каждому из трёх предметов. При этом
+<Фамилия> и <Имя>, <Имя> и <Баллы> разделены одним пробелом. Пример входной строки:
+
+Романов Вельямин 48 39 55
+
+Напишите программу, которая будет выводить на экран фамилии и имена абитуриентов,
+допущенных к сдаче экзаменов в первом потоке. При этом фамилии должны выводиться в
+алфавитном порядке.
+
+Заполняет словарь, сортирует, создавая новый и определяет, кто из абитуриентов
+допущен к сдаче экзаменов в первом потоке:
+
+```c#
+public static string AdmittedExam(string f)
+{
+    using (StreamReader reader = new StreamReader(f))
+    {
+        Dictionary<string, int[]> applicants = new Dictionary<string, int[]>();
+        while (!reader.EndOfStream)
+        {
+            string[] line = reader.ReadLine().Split(' ');
+            string name = line[0] + " " + line[1];
+            int[] points = { int.Parse(line[2]), int.Parse(line[3]), int.Parse(line[4]) };
+            applicants.Add(name, points);
+        }
+
+        SortedDictionary<string, int[]> sorted = new SortedDictionary<string, int[]>(applicants);
+        string result = string.Empty;
+        foreach (var p in sorted)
+        {
+            if (p.Value[0] >= 30 && p.Value[1] >= 30 && p.Value[2] >= 30 &&
+                (p.Value[0] + p.Value[1] + p.Value[2]) >= 140)
+            {
+                result += p.Key;
+            }
+        }
+        return result.Trim('\n');
+    }
+}
+```
+
+## Тесты
+
+*Содержание файла:*
+
+![image](https://github.com/user-attachments/assets/2fdaa72c-8d18-4d0b-ba0e-92824476c934)
+
+*Вывод:*
+
+![image](https://github.com/user-attachments/assets/b41ca823-3a98-4d09-b254-4772b0280435)
+
+## Постановка задачи 6
+XML – cериализация и коллекции
 Файл содержит сведения об игрушках: название игрушки, ее стоимость в рублях и возрастные
-границы (например, игрушка может предназначаться для детей от двух до пяти лет). Получить
-сведения о том, можно ли подобрать игрушку, любую, кроме мяча, подходящую ребенку трех лет.
+границы (например, игрушка может предназначаться для детей от двух до пяти лет).
+Определить стоимость самого дорогого конструктора.
 
 Структура игрушки:
 
 ```c#
-struct Toy
+public struct Toy
 {
     public string Name;
     public double Cost;
@@ -303,161 +231,43 @@ struct Toy
 }
 ```
 
-Заполнение бинарного файла структурами:
+Заполнение xml файла структурами:
 
 ```c#
-public static string FillBinFile(string sour, string[] sarr){...}
+public static string FillXmlFile(string[] sarr){...}
 ```
 
-Вывод данных бинарного файла:
+Вывод данных файла:
 
 ```c#
-public static string ReadBinFile(string sour){...}
+public static string ReadFile(FileStream f, XmlSerializer xml){...}
 ```
 
 Подходит ли игрушка:
 
 ```c#
-public static string SuitableToys(string sour)
+public static string SuitableToys(FileStream f, XmlSerializer xml)
 {
-    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
-    using (BinaryReader reader = new BinaryReader(File.Open(sour, FileMode.Open)))
+    f.Position = 0;
+    f.Seek(0, SeekOrigin.Begin);
+    Toy[] t = (Toy[])xml.Deserialize(f);
+    foreach (Toy toy in t)
     {
-        while (reader.BaseStream.Position != reader.BaseStream.Length)
+        if (toy.Name != "Мяч" && toy.MinAge <= 3 && toy.Name != "мяч" && toy.Name != "МЯЧ")
         {
-            string name = reader.ReadString();
-            float cost = (float)reader.ReadDouble();
-            int minAge = reader.ReadInt32();
-            int maxAge = reader.ReadInt32();
-            if (name != "Мяч" && minAge <=3 && name != "мяч" && name != "МЯЧ")
-            {
-                return "Ура, мы можем подобрать игрушку :3";
-            }
+            return "Ура, мы можем подобрать игрушку :3";
         }
-        return "О, нет, мы не можем подобрать игрушку";
     }
+    return "О, нет, мы не можем подобрать игрушку";
 }
 ```
 
 ## Тесты
+
+*Содержание файла:*
+
+![image](https://github.com/user-attachments/assets/9b470eef-7a0e-41eb-848d-ec5f262e1338)
+
 *Вывод:*
 
-![image](https://github.com/user-attachments/assets/2c57835d-a1ca-4978-9af3-9d78a405e3d2)
-
-## Постановка задачи 6
-
-В текстовом файле хранятся целые числа по одному в строке, исходный файл
-необходимо заполнить случайными данными, заполнение организовать отдельным методом. 
-В файле найти сумму максимального и минимального элементов.
-
-Заполнение файла случайными значениями по одному элементу в строке:
-
-```c#
-public static string FillFileN(string sour, int x) {...}
-```
-
-Сумма минимального и максимального элементов файла:
-
-```c#
-public static string MinPlusMax(string sour)
-{
-    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
-    using (StreamReader reader = new StreamReader(sour))
-    {
-        int min = 9999;
-        int max = -9999;
-        while (!reader.EndOfStream)
-        {
-            int x = int.Parse(reader.ReadLine());
-            if (x < min)
-                min = x;
-            if (x > max)
-                max = x;
-        }
-        return "\n\n" + "Сумма максимального и минимального элементов: " + (min + max).ToString();
-    }
-}
-```
-
-## Тесты
-*Вывод:*
-
-![image](https://github.com/user-attachments/assets/1443a658-0435-4301-9082-6cbeab46e9f8)
-
-## Постановка задачи 7
-
-В текстовом файле хранятся целые числа по несколько в строке, исходный файл
-необходимо заполнить случайными данными, заполнение организовать отдельным методом. 
-Вычислить сумму чётных элементов.
-
-Заполнение файла случайными значениями через пробел:
-
-```c#
-public static string FillFile(string sour, int x) {...}
-```
-
-Сумма четных элементов файла:
-
-```c#
-public static string EvenEl(string sour)
-{
-    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
-    using (StreamReader reader = new StreamReader(sour))
-    {
-        int sum = 0;
-        string[] sarr = reader.ReadToEnd().Split(' ');
-        for (int i = 1; i < sarr.Length - 1; i+=2)
-        {
-            sum += int.Parse(sarr[i]);
-        }
-        return "\n\n" + "Сумма элементов: " + sum;
-    }
-}
-```
-
-## Тесты
-*Вывод:*
-
-![image](https://github.com/user-attachments/assets/d8bbb3e1-99f6-4450-8083-728dae731d67)
-
-## Постановка задачи 8
-
-В текстовом файле хранится текст. 
-Создать новый текстовый файл, каждая строка которого содержит первый символ
-соответствующей строки исходного файла.
-
-Вывод данных файла:
-```c#
-public static string ReadFile(string sour) {...}
-```
-
-Создание нового файла, где каждая строка содержит первый символ соответствующей строки:
-
-```c#
-public static string WriterFile(string sour, string final)
-{
-    if (!File.Exists(sour)) throw new Exception($"Файла с именем {sour} не существует");
-    using (StreamReader reader = new StreamReader(sour))
-    {
-        using (StreamWriter writer = new StreamWriter(File.Open(final, FileMode.Create)))
-        {
-            string s = "\nСодержание итогового файла:\n\n";
-            while (!reader.EndOfStream)
-            {
-                string s1 = reader.ReadLine();
-                writer.WriteLine(s1[0]);
-                s += s1[0] + "\n";
-            }
-            return s.Substring(0, s.Length - 1);
-        }
-    }
-}
-```
-
-## Тесты
-*Вывод:*
-
-![image](https://github.com/user-attachments/assets/799de0d2-d7ac-42c5-b012-8894021c45e8)
-
-
-
+![image](https://github.com/user-attachments/assets/477de43e-a8a8-49f7-b58f-a944c4ab7d8c)
